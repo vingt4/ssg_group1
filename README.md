@@ -63,3 +63,35 @@ for module in model.modules():
         prune.remove(module, 'weight')
 ```
 ### 양자화
+```
+# dynamic quantization 적용
+quantized_model = torch.quantization.quantize_dynamic(
+    model, {nn.Linear}, dtype=torch.qint8
+)
+# static quantizaion 적용
+model.eval()
+model.qconfig = torch.quantization.get_default_qconfig('fbgemm')
+torch.quantization.prepare(model, inplace=True)
+
+# Calibration 및 Quantization 적용
+for images, _ in dataloader:
+    model(images)
+torch.quantization.convert(model, inplace=True)
+model.qconfig = torch.quantization.get_default_qat_qconfig('fbgemm')
+torch.quantization.prepare_qat(model, inplace=True)
+
+#Quantizaion-aware training 적용 하여 모델 훈련
+model.train()
+for epoch in range(num_epochs):
+    for images, labels in dataloader:
+        outputs = model(images)
+        loss = criterion(outputs, labels)
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+# Quantization 적용
+model.eval()
+torch.quantization.convert(model, inplace=True)
+```
+
