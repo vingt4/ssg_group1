@@ -9,6 +9,7 @@
 ## Data Preprocessing
 ### 1. 데이터 설명
 ptbxl_database.csv: ECG 데이터에 대한 정보를 담은 CSV 파일입니다.
+
 scp_statements.csv: 진단 정보를 포함한 데이터베이스 CSV 파일입니다.
 
 ### 2. 진단 클래스 매핑
