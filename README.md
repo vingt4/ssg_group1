@@ -52,13 +52,9 @@ DataLoader를 통해 배치 크기 32로 셔플된 데이터를 사용하였습�
 ### 가지치기
 '''python
 import torch.nn.utils.prune as prune
-
-### Conv2D 레이어에 Weight Pruning 적용
 for module in model.modules():
     if isinstance(module, nn.Conv2d):
         prune.l1_unstructured(module, name='weight', amount=0.4)  # 40% Pruning
-
-### Pruned Weight 적용
 for module in model.modules():
     if isinstance(module, nn.Conv2d):
         prune.remove(module, 'weight')
