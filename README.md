@@ -50,13 +50,16 @@ DataLoader를 통해 배치 크기 32로 셔플된 데이터를 사용하였습�
 ## ConVNext
 ## 경량화
 ### 가지치기
-'''
+```
 import torch.nn.utils.prune as prune
+
+# 가중치 40퍼센트 pruning
 for module in model.modules():
     if isinstance(module, nn.Conv2d):
-        prune.l1_unstructured(module, name='weight', amount=0.4)  # 40% Pruning
+        prune.l1_unstructured(module, name='weight', amount=0.4)
+# 가중치 고정 
 for module in model.modules():
     if isinstance(module, nn.Conv2d):
         prune.remove(module, 'weight')
-'''
+```
 ### 양자화
