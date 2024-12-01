@@ -7,6 +7,38 @@
 다음의 링크에서 Data.zip 파일을 다운받은 후 같은 폴더에 압축을 해제하면 됩니다.
 [Data](https://drive.google.com/file/d/1XbVp8MEL8JADnAY4fpOoWrWMCmsYewJ7/view?usp=sharing)
 ## Data Preprocessing
+### 1. 데이터 설명
+ptbxl_database.csv: ECG 데이터에 대한 정보를 담은 CSV 파일입니다.
+scp_statements.csv: 진단 정보를 포함한 데이터베이스 CSV 파일입니다.
+
+### 2. 진단 클래스 매핑
+각 ECG 샘플의 scp_codes를 진단 클래스(diagnostic_class)로 매핑합니다. 진단 클래스는 scp_statements.csv의 diagnostic_class 열에서 정의되며, 진단과 관련된 (diagnostic == 1) 항목만 사용하였습니다. 
+
+### 3. 데이터 필터링
+매핑된 진단 클래스가 없는 샘플은 제거하였습니다. 또한 각 샘플은 diagnostic_superclass에 해당하는 진단 클래스의 리스트로 저정하였습니다.
+
+### 4. ECG 신호 로드
+샘플링 속도(100Hz 또는 500Hz)에 따라 ECG 신호 데이터를 로드합니다. WFDB 모듈을 사용해 ECG 신호와 메타 데이터를 불러오며 신호데이터를 Numpy 배열로 변환하였습니다.
+
+### 5. 데이터셋 분리
+데이터셋은 strat_fold 열을 기준으로 나뉩니다:
+Train Set: strat_fold가 테스트(10) 및 검증(9) 폴드가 아닌 샘플.
+Validation Set: strat_fold가 검증(9) 폴드인 샘플.
+Test Set: strat_fold가 테스트(10) 폴드인 샘플.
+
+### 6. 다중 라벨 이진화
+진단 클래스는 5개의 Multi Label로 되어있기 때문에 MultiLabelBinarizer를 사용해 라벨 데이터를 이진화하였습니다. 또한 fit_transform으로 학습 및 변환, 이후 검증 및 테스트 데이터를 동일하게 변환하였습니다.
+
+### 7. 데이터셋 클래스 정의
+PyTorch의 Dataset을 사용하여 ECGDataset 클래스를 정의하였습니다. 또한 Label은 torch.tensor로 변환하였습니다.
+
+### 8. 데이터 증강 및 변환
+torchvision.transforms를 활용하여 데이터를 텐서로 변환하고 크기를 조정(182x256)하였습니다. CNN 모델 사용을 위해 1채널 데이터를 3채널로 확장하였으며, 데이터를 정규화하였습니다.
+
+### 9. DataLoader
+DataLoader를 통해 배치 크기 32로 셔플된 데이터를 사용하였습니다.
+
+
 ## Vit
 ## Deit
 ## EfficientNetV2
