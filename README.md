@@ -12,6 +12,10 @@ ptbxl_database.csv: ECG 데이터에 대한 정보를 담은 CSV 파일입니다
 
 scp_statements.csv: 진단 정보를 포함한 데이터베이스 CSV 파일입니다.
 
+records100 : 100Hz 속도로 샘플링된 ECG 파일입니다.
+
+records500 : 500Hz 속도로 샘플링된 ECG 파일입니다.
+
 ### 2. 진단 클래스 매핑
 각 ECG 샘플의 scp_codes를 진단 클래스(diagnostic_class)로 매핑합니다. 진단 클래스는 scp_statements.csv의 diagnostic_class 열에서 정의되며, 진단과 관련된 (diagnostic == 1) 항목만 사용하였습니다. 
 
