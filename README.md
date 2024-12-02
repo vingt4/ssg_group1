@@ -5,7 +5,7 @@
 구교현, 박효정, 변예원, 윤태준, 최은혁
 ## Data Download
 다음의 링크에서 Data.zip 파일을 다운받은 후 같은 폴더에 압축을 해제하면 됩니다.
-[Data](https://drive.google.com/file/d/1XbVp8MEL8JADnAY4fpOoWrWMCmsYewJ7/view?usp=sharing)
+[Data](https://drive.google.com/file/d/1XbVp8MEL8JADnAY4fpOoWrWMCmsYewJ7/view?usp=sharing)](https://physionet.org/static/published-projects/ptb-xl/ptb-xl-a-large-publicly-available-electrocardiography-dataset-1.0.3.zip)
 ## Data Preprocessing
 ### 1. 데이터 설명
 ptbxl_database.csv: ECG 데이터에 대한 정보를 담은 CSV 파일입니다.
