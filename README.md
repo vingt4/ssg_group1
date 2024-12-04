@@ -3,6 +3,20 @@
 해당 프로젝트는 심장질환 조기 진단을 위한 딥러닝 모델을 활용한 심전도(ECG) 데이터 분석 프로젝트입니다. 해당 프로젝트는 다양한 딥러닝 모델을 비교하고 분석하여, 정확도를 높이고 모델을 경량화하는 것에 초점을 맞췄습니다. 주요 분석 모델로는 Vision Transformer (ViT), DeiT, EfficientNetV2, ConVNexT 4가지 딥러닝 모델을 사용하였습니다. 또한 해당 네 가지 모델을 사용하여 ECG데이터 분석을 통한 심장질환 분류 과제를 수행한 후 하이퍼 파라미터 변환 등을 통하여 성능을 높이고, 성능을 유지하면서 모델을 가지치기, 양자화 등을 통해 경량화시켰습니다.
 ## 🧑🏻‍👩🏻‍👦🏼팀원
 구교현, 박효정, 변예원, 윤태준, 최은혁
+## Related Research
+### 1. HeartBEiT: Vision Transformer for Electrocardiogram Data Improves Diagnostic Performance at Low Sample Sizes
+### 연구 내용
+blah blah
+
+### 2. Automated ECG Image Classification with InceptionV3
+### 연구 내용
+blah blah
+
+### 3. 
+### 연구 내용
+blah blah
+### 
+
 ## Data Download
 다음의 링크에서 파일을 다운받은 후 같은 폴더에 압축을 해제하면 됩니다.
 [Data](https://physionet.org/static/published-projects/ptb-xl/ptb-xl-a-large-publicly-available-electrocardiography-dataset-1.0.3.zip)
@@ -44,7 +58,7 @@ torchvision.transforms를 활용하여 데이터를 텐서로 변환하고 크�
 DataLoader를 통해 배치 크기 32로 셔플된 데이터를 사용하였습니다.
 
 
-## Vit
+## ViT(Vision Transformer)
 Vision Transformer (ViT) 모델 설명
 
 ### <모델 개요>
@@ -88,7 +102,7 @@ ViT 모델은 BCEWithLogitsLoss를 손실 함수로 사용하며, Adam 옵티마
   모델은 검증 및 테스트 데이터에서 높은 성능을 기록하였으며, ECG 데이터 분석에 ViT 구조의 효과를 입증했습니다.
 
 ViT는 심전도(ECG) 데이터와 같은 시계열 이미지 데이터를 처리하는 데 있어 유용한 모델임을 보였으며, 본 프로젝트에서는 ECG 신호를 시각화하여 이미지를 생성한 뒤 ViT를 사용하여 정확도와 효율성을 극대화하였습니다.
-## Deit
+## DeiT(Data efficient image Transformer)
 DeiT 모델 설명
 
 ### <모델 개요>
