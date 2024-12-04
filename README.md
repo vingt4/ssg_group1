@@ -95,8 +95,45 @@ DeiT 모델 설명
 DeiT(Data efficient image Transformer)는 ViT 모델의 변형형입니다. DeiT 모델은 기존 ViT 모델이 대규모 데이터셋이 확복되어야 효과적으로 학습할 수 있는 문제를 개선하여, 소규모 데이터셋으로도 높은 성능을 나타낼 수 있도록 설계되었습니다. 이러한 DeiT 모델은 기존의 ViT 모델의 기본적인 구조를 공유하며, Knowledge Distillation 기법을 사용하여 기존 ViT 모델이 가지고 있었던 단점을 개선하였습니다. 본 프로젝트에서는 DeiT-tiny, DeiT-base 등의 모델을 사용했으며, PTB-XL 데이터셋을 활용한 ECG 데이터를 기반으로 심장질환 분류 태스크를 수행했습니다.
 
 ### <구조 및 주요 구성 요소>
+DeiT는 ViT 모델과 대부분의 구조를 공유하고 있기 때문에, DeiT 모델에서 특징적으로 존재하는 구성 요소를 기반으로 설명합니다.
 
+1. 지식 증류(Knowledge Distillation)
+DeiT는 ViT 모델과 비교하여 지식 증류 기법을 적용하였다는 점에서 차이가 있습니다.
+  - 지식 증류란 크고 복잡한 구조를 가진 모델로, 높은 성능을 발휘하지만 계산량이 많고 비효율적일 수 있는 Teacher 모델과 비교적 작고 Teacher 모델의 지식을 학습하여 계산 효율성을 높이면서도 성능을 유지하도록 설계된 Student 모델이 함께 존재합니다.
+  - 이 과정에서 데이터의 실제 정답 레이블인 Hard Target과 Teacher 모델이 예측한 레이블에 대한 확률 분포인 Soft target이 등장하며, 지식 증류 기법에서는 이 두가지 target 값을 결합하여 학습에 활용합니다.
+  - 즉, Hard Target에 대한 손실 함수에서 이미 실제 레이블에 대한 예측 오류를 최소화하는 데에 초점을 맞추고 있으므로, Student 모델에서는 Teacher Model에서 예측한 확률 분포와의 차이를 줄이는 데에만 집중하면 되는 것입니다.
+  - 손실 함수는 Total Loss = α * Hard Loss + (1−α) * Soft Loss의 형태로 구성되며 α는 Hard Loss와 Soft Loss 간의 가중치를 조절하는 하이퍼파라미터입니다.
+  - 이러한 지식 증류기법은 규모가 크고 복잡한 Teacher 모델이 아닌 Student 모델의 학습을 중점적으로 진행하여 모델의 경량화를 실현했습니다. 또한 Soft Target의 다양한 확률 분포 데이터를 바탕으로 기존의 데이터보다 더욱 풍부한 데이터를 학습할 수 있어 더욱 적은 데이터 양으로도 충분한 학습이 가능해졌습니다.
+    
+2. Distillation Token
+  - Distillation Token은 Teacher 모델에서 생성되는 soft target(확률 분포)를 학습하는 데에 사용합니다.
+  - Distillation Token은 이러한 soft target 값을 더욱 효과적으로 활용할 수 있게 하며 이는 DeiT 모델의 일반화 성능을 향상시킵니다.
+  - 이 또한 ViT 모델의 핵심인 Self-Attention 매커니즘을 활용하여 처리됩니다. 
 
+3. Distillation Head
+   - Distillation Head 위에서 언급한 Distillation Token을 처리하기 위해 설계된 새로운 구성 요소입니다.
+   - 기존 모델이 Classification Head만 존재했던 반면, DeiT는 Distillation Token을 활용하기 위한 Distillation Head를 추가하였습니다.
+   - Distillation Head는 Distillation Token에서 주어지는 soft target 값을 기반으로 모델을 학습합니다.
+   - 결국 DeiT 모델은 이러한 차이점을 바탕으로 Classification Head와 Distillation Head의 출력값을 모두 사용하여 학습하며, 최종 과정에서는 두 출력값의 평균을 계산하여 최종 예측값을 도출합니다.
+     
+### <하이퍼파라미터 최적화>
+
+- 패치 크기: (16x16)
+- 임베딩 차원: 192
+- Transformer 깊이: 12
+- 헤드 수: 3
+- MLP 히든 레이어 차원: 768 (임베딩 차원 × 4)
+- 드롭아웃 비율: 0.2
+
+### <학습 및 평가>
+DeiT 모델은 BCEWithLogitsLoss를 손실 함수로 사용하며 Adam 옵티마이저를 활용하여 학습을 진행했습니다. 조기 종료를 통해 과적합을 방지하며, 검증 데이터에서 최적 성능을 기록한 모델을 체크포인트로 저장합니다. 
+
+- 평가지표:
+  다중 클래스 분류 문제를 위해 Accuracy, F1-Score(매크로 평균)를 주요 평가지표로 사용하였습니다.
+- 검증 및 테스트 결과:
+  - 학습 및 검증 데이터에서 안정적인 Accuracy와 F1-Score를 기록하였으며 테스트 데이터에서도 비슷한 결과를 나타냈습니다.
+  - 신기하게도 DeiT-tiny와 Deit-base 중 더욱 경량화를 목적으로 만들어진 tiny 모델에서 더욱 좋은 성능이 나타났습니다.
+  
 
 ## EfficientNetV2
 EfficientNetV2 모델 설명
