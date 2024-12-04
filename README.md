@@ -89,6 +89,15 @@ ViT 모델은 BCEWithLogitsLoss를 손실 함수로 사용하며, Adam 옵티마
 
 ViT는 심전도(ECG) 데이터와 같은 시계열 이미지 데이터를 처리하는 데 있어 유용한 모델임을 보였으며, 본 프로젝트에서는 ECG 신호를 시각화하여 이미지를 생성한 뒤 ViT를 사용하여 정확도와 효율성을 극대화하였습니다.
 ## Deit
+DeiT 모델 설명
+
+### <모델 개요>
+DeiT(Data efficient image Transformer)는 ViT 모델의 변형형입니다. DeiT 모델은 기존 ViT 모델이 대규모 데이터셋이 확복되어야 효과적으로 학습할 수 있는 문제를 개선하여, 소규모 데이터셋으로도 높은 성능을 나타낼 수 있도록 설계되었습니다. 이러한 DeiT 모델은 기존의 ViT 모델의 기본적인 구조를 공유하며, Knowledge Distillation 기법을 사용하여 기존 ViT 모델이 가지고 있었던 단점을 개선하였습니다. 본 프로젝트에서는 DeiT-tiny, DeiT-base 등의 모델을 사용했으며, PTB-XL 데이터셋을 활용한 ECG 데이터를 기반으로 심장질환 분류 태스크를 수행했습니다.
+
+### <구조 및 주요 구성 요소>
+
+
+
 ## EfficientNetV2
 EfficientNetV2 모델 설명
 
