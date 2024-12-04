@@ -93,18 +93,18 @@ ViT는 심전도(ECG) 데이터와 같은 시계열 이미지 데이터를 처�
 EfficientNetV2 모델 설명
 
 ### <모델 개요>
-EfficientNetV2는 CNN(Convolutional Neural Network) 기반의 모델로, 기존의 EfficientNet 모델의 성능과 효율성을 개선한 버전입니다. 이 모델은 컴퓨터 비전 task에서 더욱 빠르고 정확한 추론을 목표로 하며, NAS(Neural Architecture Search)와 Progressive Learning 전략으로 이미지 크기에 따른 정규화를 조정해나가는 점진적인 학습을 진행하며 정확도와 효율성을 극대화합니다. 본 프로젝트에서는 기본적인 아키텍처를 지닌 EfficientNetV2-S 모델을 사용하여 ECG 데이터를 기반으로 심장질환 분류를 수행했습니다.
+EfficientNetV2는 CNN(Convolutional Neural Network) 기반의 모델로, 기존의 EfficientNet 모델의 성능과 효율성을 개선한 버전입니다. 이 모델은 컴퓨터 비전 task에서 더욱 빠르고 정확한 추론을 목표로 하며, NAS(Neural Architecture Search)와 Progressive Learning 전략으로 이미지 크기에 따른 정규화를 조정해나가는 점진적인 학습을 진행하며 정확도와 효율성을 극대화합니다. 
+본 프로젝트에서는 기본적인 아키텍처를 지닌 EfficientNetV2-S 모델을 사용하여 ECG 데이터를 기반으로 심장질환 분류를 수행했습니다.
 
 ### <구조 및 주요 구성 요소>
 1. 입력 및 초기 레이어 : 첫 번째 Conv2d 레이어는 3×3 필터와 stride=2를 사용하며, 활성화 함수로 SiLU를 사용해 성능을 최적화했습니다.
 2. MBConv와 Fused-MBConv 블록
 - MBConv: 기존 EfficientNet의 핵심 구성 요소로, MobileNet 구조에서 발전된 Mobile Inverted Bottleneck Convolution을 채택. 깊이별 연산인 Depthwise Convolution과 Squeeze and Excittation 블록으로 채널 간 관계를 모델링하여 중요한 특징을 강조
 - Fused-MBConv: 초기 레이어에서 사용되며, 계산 효율성 향상. 또한 Swish라는 부드러운 형태의 활성화 함수를 사용해 학습 안정성과 성능 향상에 기여
-3. Progressive Learning
-- 학습 초기에 작은 이미지 크기로 시작하여 점진적으로 크기를 증가시킴으로써, 복잡한 패턴 학습을 통해 학습 시간 단축 및 성능 유지에 기여
+3. Progressive Learning : 학습 초기에 작은 이미지 크기로 시작하여 점진적으로 크기를 증가시킴으로써, 복잡한 패턴 학습을 통해 학습 시간 단축 및 성능 유지에 기여
 4. Efficient Scaling : 복합 스케일링(Compound Scaling)을 통해 네트워크 깊이(Depth), 너비(Width), 해상도(Resolution)를 조정하여 효율성과 성능을 극대화
-5. Stochastic Depth Regularization: 각 블록에 대해 확률적으로 레이어를 드롭하여 모델의 일반화 성능을 강화
-6. Adaptive Average Pooling: 전역 풀링을 통해 공간적 크기를 줄이고, 최종 출력 채널에 연결
+5. Stochastic Depth Regularization : 각 블록에 대해 확률적으로 레이어를 드롭하여 모델의 일반화 성능을 강화
+6. Adaptive Average Pooling : 전역 풀링을 통해 공간적 크기를 줄이고, 최종 출력 채널에 연결
 
 ### <가중치 활용>
 1. Pretrained Weights : EfficientNet_V2_S_Weights 클래스를 사용해 ImageNet 데이터셋으로 사전 학습된 가중치를 활용
