@@ -190,6 +190,42 @@ EfficientNetV2는 CNN(Convolutional Neural Network) 기반의 모델로, 기존�
 EfficientNetV2-S 모델은 Early Stopping과 하이퍼파라미터 최적화를 통해 검증 및 테스트 데이터에서 높은 성능을 기록하며, ECG 데이터를 기반으로 한 심장질환 분류 작업에서 정확도와 효율성을 입증했습니다.
 
 ## ConVNext
+ConVNeXt 모델 설명
+
+### <모델 개요>
+ConVNeXt는 ConvNet(Convolutional Neural Network)의 최신 버전으로, Vision Transformer(ViT) 모델의 성공적인 요소를 도입하여 CNN 기반 모델의 성능과 효율성을 극대화한 아키텍처입니다. ConVNeXt는 기존 CNN 구조를 기반으로 하면서도, 더 단순하고 모듈화된 디자인을 통해 현대적인 트렌드와 잘 맞는 최적화가 이루어졌습니다.
+본 프로젝트에서는 ConVNeXt-Tiny 모델을 사용하여 ECG 데이터를 기반으로 심장질환 분류를 수행하였습니다.
+
+### <구조 및 주요 구성 요소>
+- 단순화된 ConvNet 디자인
+  * ConVNeXt는 기존 CNN 모델에서 사용되던 복잡한 요소들을 제거하고 간결화된 디자인을 채택하여 모델의 가독성과 효율성을 높였습니다.
+- 모듈화된 구조
+   * 모델의 각 단계가 독립적으로 설계되어 있으며, 각 블록은 다음과 같은 특징을 가집니다.
+      - Depthwise Convolution: 각 채널별로 독립적인 Convolution을 수행하여 계산 효율성을 높임.
+      - Layer Normalization: Batch Normalization 대신 사용되며, 네트워크 안정성과 학습 속도를 개선.
+      - Pointwise Convolution (1x1 Conv): 채널 간의 상호작용을 학습.
+- 대규모 커널 활용
+   * 전통적인 CNN에서는 주로 작은 커널(3x3)이 사용되었지만, ConVNeXt는 7x7 커널을 사용하여 더 넓은 컨텍스트를 효과적으로 학습합니다.
+- Residual Connection
+   * 각 블록의 입력과 출력을 연결하여 기울기 소실 문제를 방지하고 학습 안정성을 높입니다.
+- MLP 설계 및 활성화 함수
+   ** 각 Convolution 블록 뒤에 MLP를 적용하여 비선형 변환을 수행하며, 활성화 함수로 GELU(Gaussian Error Linear Unit)를 사용하여 성능을 향상시켰습니다.
+
+### <하이퍼파라미터 최적화>
+모델 버전: ConVNeXt-Tiny
+입력 이미지 크기: 224 x 224
+채널 수: 96 (Tiny 버전 기준)
+블록 수: 4단계
+각 단계의 반복 블록: [3, 3, 9, 3]
+커널 크기: Depthwise Conv에서 7x7
+드롭아웃 비율: 0.2
+Learning Rate: 4e-3
+Optimizer: AdamW
+<학습 및 평가>
+손실 함수: SoftTargetCrossEntropy
+최적화 전략: AdamW와 Weight Decay (0.05)
+
+
 ## 경량화
 ### 가지치기
 ```
