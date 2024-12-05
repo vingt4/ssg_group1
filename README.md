@@ -125,10 +125,10 @@ DeiT는 ViT 모델과 비교하여 지식 증류 기법을 적용하였다는 �
   - 이 또한 ViT 모델의 핵심인 Self-Attention 매커니즘을 활용하여 처리됩니다. 
 
 3. Distillation Head
-   - Distillation Head 위에서 언급한 Distillation Token을 처리하기 위해 설계된 새로운 구성 요소입니다.
-   - 기존 모델이 Classification Head만 존재했던 반면, DeiT는 Distillation Token을 활용하기 위한 Distillation Head를 추가하였습니다.
-   - Distillation Head는 Distillation Token에서 주어지는 soft target 값을 기반으로 모델을 학습합니다.
-   - 결국 DeiT 모델은 이러한 차이점을 바탕으로 Classification Head와 Distillation Head의 출력값을 모두 사용하여 학습하며, 최종 과정에서는 두 출력값의 평균을 계산하여 최종 예측값을 도출합니다.
+ - Distillation Head 위에서 언급한 Distillation Token을 처리하기 위해 설계된 새로운 구성 요소입니다.
+ - 기존 모델이 Classification Head만 존재했던 반면, DeiT는 Distillation Token을 활용하기 위한 Distillation Head를 추가하였습니다.
+ - Distillation Head는 Distillation Token에서 주어지는 soft target 값을 기반으로 모델을 학습합니다.
+ - 결국 DeiT 모델은 이러한 차이점을 바탕으로 Classification Head와 Distillation Head의 출력값을 모두 사용하여 학습하며, 최종 과정에서는 두 출력값의 평균을 계산하여 최종 예측값을 도출합니다.
      
 ### <하이퍼파라미터 최적화>
 
