@@ -214,6 +214,8 @@ EfficientNetV2는 CNN(Convolutional Neural Network) 기반의 모델로, 기존�
 EfficientNetV2-S 모델은 Early Stopping과 하이퍼파라미터 최적화를 통해 검증 및 테스트 데이터에서 높은 성능을 기록하며, ECG 데이터를 기반으로 한 심장질환 분류 작업에서 정확도와 효율성을 입증했습니다.
 
 ## ConVNext
+test
+
 ## 경량화
 ### 가지치기
 ```
